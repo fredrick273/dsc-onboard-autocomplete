@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f0f8ff; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        #container {
+            text-align: center;
+        }
+
+        #input {
+            border: 2px solid #87ceeb; 
+            border-radius: 0.5rem;
+            padding: 10px;
+            width: 300px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        #suggestionbox {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            max-height: 200px;
+            overflow-y: auto;
+            border: 2px solid #87ceeb; 
+            border-top: none;
+            border-radius: 0 0 0.5rem 0.5rem;
+        }
+
+        .suggestion {
+            background-color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #87ceeb; 
+        }
+
+        .suggestion p {
+            margin: 0;
+            flex-grow: 1;
+        }
+
+        .suggestion button {
+            background-color: #ff6347; 
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 0.25rem;
+            cursor: pointer;
+        }
+
+        .suggestion button:hover {
+            background-color: #d9534f; 
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <input id="input" type="text" placeholder="Type here...">
+        <ul id="suggestionbox"></ul>
+    </div>
+
+
+    <script>
+          var data = [
+    { id: 0, value: "Lorem", show: true },
+    { id: 1, value: "Ipsum", show: true },
+    { id: 2, value: "Dolor", show: true },
+    { id: 3, value: "Sit", show: true },
+    { id: 4, value: "Amet", show: true },
+    { id: 5, value: "Consectetur", show: true },
+    { id: 6, value: "Adipiscing", show: true },
+    { id: 7, value: "Elit", show: true },
+    { id: 8, value: "Sed", show: true },
+    { id: 9, value: "Eiusmod", show: true },
+    { id: 10, value: "Tempor", show: true },
+    { id: 11, value: "Incididunt", show: true },
+    { id: 12, value: "Labore", show: true },
+    { id: 13, value: "Dolore", show: true },
+    { id: 14, value: "Magna", show: true },
+    { id: 15, value: "Aliqua", show: true },
+    { id: 16, value: "Ut", show: true },
+    { id: 17, value: "Enim", show: true },
+    { id: 18, value: "Minim", show: true },
+    { id: 19, value: "Veniam", show: true },
+    { id: 20, value: "Quis", show: true },
+    { id: 21, value: "Nostrud", show: true },
+    { id: 22, value: "Exercitation", show: true },
+    { id: 23, value: "Ullamco", show: true },
+    { id: 24, value: "Laboris", show: true },
+    { id: 25, value: "Nisi", show: true },
+    { id: 26, value: "Aliquip", show: true },
+    { id: 27, value: "Commodo", show: true },
+    { id: 28, value: "Culpa", show: true },
+    { id: 29, value: "Reprehenderit", show: true },
+    { id: 30, value: "Voluptate", show: true },
+    { id: 31, value: "Cillum", show: true },
+    { id: 32, value: "Fugiat", show: true },
+    { id: 33, value: "Nulla", show: true },
+    { id: 34, value: "Pariatu", show: true },
+    { id: 35, value: "Excepteur", show: true },
+    { id: 36, value: "Sint", show: true },
+    { id: 37, value: "Occaecat", show: true },
+    { id: 38, value: "Cupidatat", show: true },
+    { id: 39, value: "Proident", show: true },
+    { id: 40, value: "Sunt", show: true },
+    { id: 41, value: "Culpa", show: true },
+    { id: 42, value: "Officia", show: true },
+    { id: 43, value: "Deserunt", show: true },
+    { id: 44, value: "Mollit", show: true },
+    { id: 45, value: "Anim", show: true },
+    { id: 46, value: "Est", show: true },
+    { id: 47, value: "Culpa", show: true },
+    { id: 48, value: "Quis", show: true },
+    { id: 49, value: "Nostrud", show: true },
+    { id: 50, value: "Exercitation", show: true },
+    { id: 51, value: "Ullamco", show: true },
+    { id: 52, value: "Laboris", show: true },
+    { id: 53, value: "Nisi", show: true },
+    { id: 54, value: "Aliquip", show: true },
+    { id: 55, value: "Commodo", show: true },
+    { id: 56, value: "Culpa", show: true },
+    { id: 57, value: "Reprehenderit", show: true },
+    { id: 58, value: "Voluptate", show: true },
+    { id: 59, value: "Cillum", show: true },
+    { id: 60, value: "Fugiat", show: true },
+    { id: 61, value: "Nulla", show: true },
+    { id: 62, value: "Pariatu", show: true },
+    { id: 63, value: "Excepteur", show: true },
+    { id: 64, value: "Sint", show: true },
+    { id: 65, value: "Occaecat", show: true },
+    { id: 66, value: "Cupidatat", show: true },
+    { id: 67, value: "Proident", show: true },
+    { id: 68, value: "Sunt", show: true },
+    { id: 69, value: "Culpa", show: true },
+    { id: 70, value: "Officia", show: true },
+    { id: 71, value: "Deserunt", show: true },
+    { id: 72, value: "Mollit", show: true },
+    { id: 73, value: "Anim", show: true },
+    { id: 74, value: "Est", show: true },
+    { id: 75, value: "Culpa", show: true },
+    { id: 76, value: "Quis", show: true },
+    { id: 77, value: "Nostrud", show: true },
+    { id: 78, value: "Exercitation", show: true },
+    { id: 79, value: "Ullamco", show: true },
+    { id: 80, value: "Laboris", show: true },
+    { id: 81, value: "Nisi", show: true },
+    { id: 82, value: "Aliquip", show: true },
+    { id: 83, value: "Commodo", show: true },
+    { id: 84, value: "Culpa", show: true },
+    { id: 85, value: "Reprehenderit", show: true },
+    { id: 86, value: "Voluptate", show: true },
+    { id: 87, value: "Cillum", show: true },
+    { id: 88, value: "Fugiat", show: true },
+    { id: 89, value: "Nulla", show: true },
+    { id: 90, value: "Pariatu", show: true },
+    { id: 91, value: "Excepteur", show: true },
+    { id: 92, value: "Sint", show: true },
+    { id: 93, value: "Occaecat", show: true },
+    { id: 94, value: "Cupidatat", show: true },
+    { id: 95, value: "Proident", show: true },
+    { id: 96, value: "Sunt", show: true },
+    { id: 97, value: "Culpa", show: true },
+    { id: 98, value: "Officia", show: true },
+    { id: 99, value: "Deserunt", show: true }
+];
+
+const input = document.querySelector("#input");
+        const box = document.querySelector("#suggestionbox");
+
+        let debounceTimer;
+
+        input.addEventListener("input", function (e) {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => search(e.target.value), 300);
+        });
+
+        function remove(id) {
+            data[id].show = false;
+        }
+
+        function search(value) {
+            box.innerHTML = ""; 
+            let count = 0;
+            const fragment = document.createDocumentFragment();
+
+            data.forEach((item) => {
+                if (item.value.startsWith(value) && item.show && count < 5) {
+                    const suggestion = document.createElement("li");
+                    suggestion.classList.add("suggestion");
+                    suggestion.innerHTML = `
+                        <p>${item.value}</p>
+                        <button>X</button>
+                    `;
+
+                    suggestion.querySelector("button").addEventListener("click", () => {
+                        remove(item.id);
+                        search(value);
+                    });
+
+                    fragment.appendChild(suggestion);
+                    count++;
+                }
+            });
+
+            box.appendChild(fragment);
+        }
+    </script>
+</body>
+</html>
